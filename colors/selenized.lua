@@ -285,10 +285,13 @@ local highlights = function(colors)
 	hi["@text.literal"] = { bg = colors.bg_1 }
 	hi["@text.uri"] = hi["Underlined"]
 	hi["@text.codeblock"] = { bg = colors.bg_15 }
+	-- Patch: don't make inline code look like comments, which is what vim.lua does.
+	hi["@markup.raw"] = "Constant"
 
 	-- Neovim 0.10 changed a number of defaults, which in turn changed a bunch of the highlights.
 	-- Continue to use the highlights derived from the baseline Vim config.
 	dofile(vim.env.VIMRUNTIME .. "/colors/vim.lua")
+	-- (We apply our patches here, after including vim.lua.)
 	for group, highlights in pairs(hi) do
 		highlight(group, highlights)
 	end

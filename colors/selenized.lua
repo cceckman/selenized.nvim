@@ -102,6 +102,10 @@ local highlights = function(colors)
 		cmd.syntax("reset")
 	end
 
+	-- Neovim 0.10 changed a number of defaults, which in turn changed a bunch of the highlights.
+	-- Start with the baseline config, then apply selenized.
+	dofile(vim.env.VIMRUNTIME .. "/colors/vim.lua")
+
 	g.colors_name = "selenized"
 
 	g.terminal_color_0 = colors.bg_1
@@ -288,9 +292,6 @@ local highlights = function(colors)
 	-- Patch: don't make inline code look like comments, which is what vim.lua does.
 	hi["@markup.raw"] = "Constant"
 
-	-- Neovim 0.10 changed a number of defaults, which in turn changed a bunch of the highlights.
-	-- Continue to use the highlights derived from the baseline Vim config.
-	dofile(vim.env.VIMRUNTIME .. "/colors/vim.lua")
 	-- (We apply our patches here, after including vim.lua.)
 	for group, highlights in pairs(hi) do
 		highlight(group, highlights)
